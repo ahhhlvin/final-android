@@ -1,5 +1,6 @@
 package nyc.c4q.android.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -41,13 +42,17 @@ public class EmailListActivity extends FragmentActivity implements EmailListFrag
       // tablet - single activity with list and detail
 
       // TODO - use EmailDetailFragment's factory method to create the fragment
+      FragmentManager manager = getSupportFragmentManager();
+      manager.beginTransaction().replace(R.id.email_detail_container, new EmailDetailFragment()).addToBackStack(null).commit();
       // then add the fragment to the SupportFragmentManager under R.id.email_detail_container
 
     }
     else {
       // mobile - one activity at a time
-
       // TODO - launch EmailDetailActivity passing "email" extra
+      Intent emailDetailIntent = new Intent(this, EmailDetailActivity.class);
+      emailDetailIntent.putExtra("email", email);
+      startActivity(emailDetailIntent);
     }
   }
 }
